@@ -8,7 +8,6 @@ import sharp from 'sharp'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import  Pages  from './collections/Pages'
-import { CustomContent } from './collections/CustomContent'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -24,7 +23,6 @@ export default buildConfig({
     Users, 
     Media,
     Pages,
-    CustomContent
   ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',

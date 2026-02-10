@@ -1,7 +1,8 @@
 // src/collection/Pages.tsx
 import { CollectionConfig } from 'payload'
-import { lexicalEditor, FixedToolbarFeature } from '@payloadcms/richtext-lexical'
-import  AddBlockButtonField  from '../components/AddBlockHelper'
+import { BlocksFeature, FixedToolbarFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
+import { ContentWithMedia } from '../blocks/ContentWithMedia';
+
 
 const Pages: CollectionConfig = {
     slug: 'pages',
@@ -62,7 +63,7 @@ const Pages: CollectionConfig = {
                 },
 
                 {
-                    slug: 'text-content',           // ← naya slug (different)
+                    slug: 'text-content',          
                     fields: [
                         {
                             name: 'title',
@@ -73,13 +74,16 @@ const Pages: CollectionConfig = {
                             name: 'content',
                             type: 'richText',
                             required: true,
+                            editor: lexicalEditor({
+                                features: ({defaultFeatures}) => [
+                                    ...defaultFeatures,
+                                    BlocksFeature({
+                                        blocks: [ContentWithMedia],
+                                    }),
+                                    FixedToolbarFeature()
+                                ]
+                            })
                         },
-                        {
-                            name: 'backgroundColor',
-                            type: 'select',
-                            options: ['white', 'light-gray', 'blue', 'dark'],
-                            defaultValue: 'white',
-                        }
                     ]
                 },
                 {
@@ -138,21 +142,6 @@ const Pages: CollectionConfig = {
                                                 },
                                             ],
                                         },
-                                        {
-                                            slug: 'button-block',
-                                            fields: [
-                                                {
-                                                    name: 'label',
-                                                    type: 'text',
-                                                    required: false,
-                                                },
-                                                {
-                                                    name: 'url',
-                                                    type: 'text',
-                                                    required: false,
-                                                }
-                                            ]
-                                        }
                                     ]
                                 }
                             ]
@@ -221,25 +210,39 @@ const Pages: CollectionConfig = {
                         },
                     ],
                 },
-                {
-                    slug: 'richText',
-                    fields: [
-                        {
-                            name: 'content',
-                            type: 'richText',
-                            required: true,
-                            label: 'Content',
+                // {
+                //     slug: 'richText',
+                //     fields: [
+                //         {
+                //             name: 'content',
+                //             type: 'richText',
+                //             required: true,
+                //             label: 'Content',
 
-                            editor: lexicalEditor({
-                                features: ({ defaultFeatures }) => [
-                                    ...defaultFeatures.filter(f => f.key !== 'inlineToolbar'), // floating/select pe aane wala toolbar hata rahe hain (optional)
-                                    FixedToolbarFeature(),                                     // permanent upar wala toolbar on kar rahe hain
+                //             editor: lexicalEditor({
+                //                 features: ({ defaultFeatures }) => [
+                //                     ...defaultFeatures.filter(f => f.key !== 'inlineToolbar'), // floating/select pe aane wala toolbar hata rahe hain (optional)
+                //                     FixedToolbarFeature(),                                     // permanent upar wala toolbar on kar rahe hain
 
-                                ],
-                            }),
-                        },
-                    ],
-                }
+                //                 ],
+                //             }),
+                //         },
+                //     ],
+                // }
+                // {
+                //   slug: 'richText',
+                //   fields: [
+                //     {
+                //       name: 'content',
+                //       type: 'richText',
+                //       required: true,
+                //       label: 'Content',
+
+                //       // Use shared rich text editor config with custom node + + toolbar
+                //       editor: CustomRichTextEditor,
+                //     },
+                //   ],
+                // }
             ]
         },
 
