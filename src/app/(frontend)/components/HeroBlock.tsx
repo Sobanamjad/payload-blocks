@@ -1,3 +1,4 @@
+//  src/app/(frontent)/components/heroblock.tsx
 import { Page } from '@/payload-types'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import Image from 'next/image'

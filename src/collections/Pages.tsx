@@ -1,4 +1,7 @@
+// src/collection/Pages.tsx
 import { CollectionConfig } from 'payload'
+import { lexicalEditor, FixedToolbarFeature } from '@payloadcms/richtext-lexical'
+import  AddBlockButtonField  from '../components/AddBlockHelper'
 
 const Pages: CollectionConfig = {
     slug: 'pages',
@@ -184,28 +187,28 @@ const Pages: CollectionConfig = {
                                             type: 'text',
                                         },
                                         {
-                                            name: 'type', 
-                                            type: 'select', 
+                                            name: 'type',
+                                            type: 'select',
                                             options: [
-                                                { 
+                                                {
                                                     label: 'Text',
-                                                    value: 'text' ,
+                                                    value: 'text',
                                                 },
-                                                { 
+                                                {
                                                     label: 'Email',
-                                                     value: 'email',
+                                                    value: 'email',
                                                 },
-                                                { 
+                                                {
                                                     label: 'Number',
                                                     value: 'number',
                                                 },
-                                            ], 
+                                            ],
                                             // overall required kyny ky liya 
                                             // required: true
                                         },
-                                        { 
-                                            name: 'required', 
-                                            type: 'checkbox', 
+                                        {
+                                            name: 'required',
+                                            type: 'checkbox',
                                         },
                                     ]
                                 }
@@ -216,7 +219,26 @@ const Pages: CollectionConfig = {
                             type: 'text',
                             defaultValue: 'Send',
                         },
-                    ]
+                    ],
+                },
+                {
+                    slug: 'richText',
+                    fields: [
+                        {
+                            name: 'content',
+                            type: 'richText',
+                            required: true,
+                            label: 'Content',
+
+                            editor: lexicalEditor({
+                                features: ({ defaultFeatures }) => [
+                                    ...defaultFeatures.filter(f => f.key !== 'inlineToolbar'), // floating/select pe aane wala toolbar hata rahe hain (optional)
+                                    FixedToolbarFeature(),                                     // permanent upar wala toolbar on kar rahe hain
+
+                                ],
+                            }),
+                        },
+                    ],
                 }
             ]
         },
